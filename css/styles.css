@@ -1,0 +1,342 @@
+/* ==========================================================================
+   منصة صُنّاع الأثر الرقمي - Digital Impact Makers
+   الهوية البصرية الوطنية المؤسساتية - الجزائر / بسكرة / شتمة
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+:root {
+    --dz-green: #006633;
+    --dz-green-dark: #004d26;
+    --dz-green-light: #008f48;
+    --dz-red: #D21034;
+    --dz-red-dark: #a00b25;
+    --dz-gold: #D4AF37;
+    --dz-gold-light: #F7E7A9;
+    --dz-gold-dark: #A67C1E;
+    
+    --bg-main: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    
+    --border-color: #E2E8F0;
+    --border-focus: #006633;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.03);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.04);
+    --shadow-glow: 0 0 25px rgba(0, 102, 51, 0.25);
+    
+    --font-heading: 'Cairo', sans-serif;
+    --font-body: 'Tajawal', sans-serif;
+    --font-official: 'Amiri', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    direction: rtl;
+    text-align: right;
+    font-family: var(--font-body);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* التدرجات الوطنية */
+.bg-gradient-dz {
+    background: linear-gradient(135deg, #004d26 0%, #006633 50%, #008f48 100%);
+}
+
+.bg-gradient-gold {
+    background: linear-gradient(135deg, #A67C1E 0%, #D4AF37 50%, #F7E7A9 100%);
+}
+
+.bg-gradient-dark {
+    background: linear-gradient(135deg, #0B132B 0%, #1C2541 100%);
+}
+
+.bg-mesh-subtle {
+    background-color: #f8fafc;
+    background-image: 
+        radial-gradient(at 10% 20%, rgba(0, 102, 51, 0.08) 0px, transparent 50%),
+        radial-gradient(at 90% 10%, rgba(210, 16, 52, 0.05) 0px, transparent 50%),
+        radial-gradient(at 50% 90%, rgba(212, 175, 55, 0.08) 0px, transparent 50%);
+}
+
+/* بطاقة صانع الأثر الرقمية (Impact Maker ID Card) */
+.id-card-wrapper {
+    perspective: 1000px;
+}
+
+.impact-id-card {
+    width: 380px;
+    height: 240px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0F172A 0%, #004d26 60%, #006633 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 102, 51, 0.3), 0 5px 15px rgba(0,0,0,0.1);
+    color: white;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.impact-id-card:hover {
+    transform: translateY(-4px) rotateY(4deg);
+    box-shadow: 0 20px 40px rgba(0, 102, 51, 0.4);
+}
+
+.impact-id-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+.id-card-hologram {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.8), rgba(255,255,255,0.9), rgba(0, 102, 51, 0.8));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* الشهادة الإلكترونية الرسمية (Official Verifiable Certificate) */
+.official-certificate-container {
+    background: #FFFEFA;
+    border: 12px double #006633;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    font-family: var(--font-body);
+}
+
+.official-certificate-container::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 2px solid #D4AF37;
+    pointer-events: none;
+}
+
+.official-certificate-container .watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.04;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 400px;
+}
+
+.certificate-seal {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px dashed #D4AF37;
+    background: radial-gradient(circle, #fff9e6 0%, #f7e7a9 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+    position: relative;
+}
+
+.certificate-seal::after {
+    content: '★ معتمد ★';
+    font-size: 10px;
+    font-weight: bold;
+    color: #A67C1E;
+    letter-spacing: 1px;
+}
+
+/* خريطة الجزائر التفاعلية */
+.dz-map-container {
+    position: relative;
+    background: linear-gradient(180deg, #F1F5F9 0%, #E2E8F0 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #CBD5E1;
+}
+
+.wilaya-path {
+    fill: #CBD5E1;
+    stroke: #FFFFFF;
+    stroke-width: 1;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.wilaya-path:hover {
+    fill: #008f48;
+    stroke: #004d26;
+    stroke-width: 2;
+    filter: drop-shadow(0 4px 8px rgba(0, 102, 51, 0.4));
+}
+
+.wilaya-path.active {
+    fill: #006633 !important;
+    stroke: #D4AF37 !important;
+    stroke-width: 2.5;
+}
+
+.wilaya-path.biskra {
+    fill: #006633;
+    animation: biskraGlow 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes biskraGlow {
+    0% { fill: #006633; filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.5)); }
+    100% { fill: #008f48; filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.9)); }
+}
+
+/* أزرار مخصصة وتفاعلية */
+.btn-primary-dz {
+    background: linear-gradient(135deg, #006633 0%, #008f48 100%);
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(0, 102, 51, 0.3);
+}
+
+.btn-primary-dz:hover {
+    background: linear-gradient(135deg, #004d26 0%, #006633 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 102, 51, 0.3);
+}
+
+.btn-secondary-dz {
+    background: white;
+    color: #006633;
+    border: 2px solid #006633;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+.btn-secondary-dz:hover {
+    background: #F0FDF4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 51, 0.15);
+}
+
+.btn-gold-dz {
+    background: linear-gradient(135deg, #D4AF37 0%, #E6C65A 100%);
+    color: #1E293B;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    transition: all 0.25s ease;
+}
+
+.btn-gold-dz:hover {
+    background: linear-gradient(135deg, #C29D26 0%, #D4AF37 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* شارات ومؤشرات الأداء */
+.badge-status {
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* تخصيص مشغل الوسائط */
+.custom-audio-player {
+    background: #1E293B;
+    border-radius: 12px;
+    padding: 12px;
+    color: white;
+}
+
+/* التمرير السلس */
+html {
+    scroll-behavior: smooth;
+}
+
+/* تأثير تبويبات الملاحة */
+.nav-tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.nav-tab.active {
+    color: #006633;
+    border-bottom: 3px solid #006633;
+    font-weight: 700;
+}
+
+/* محاكاة شاشة الهاتف الذكي */
+.phone-mockup {
+    width: 300px;
+    height: 590px;
+    border: 10px solid #1E293B;
+    border-radius: 36px;
+    background: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+
+.phone-mockup::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 18px;
+    background: #1E293B;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    z-index: 50;
+}
+
+/* طباعة الشهادة والوثائق */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printable-certificate, #printable-certificate * {
+        visibility: visible;
+    }
+    #printable-certificate {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        box-shadow: none;
+    }
+    .no-print {
+        display: none !important;
+    }
+}

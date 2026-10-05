@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صُنّاع الأثر الرقمي | جمعية الإبداع الثقافية شتمة - مديرية الشباب والرياضة بسكرة - وزارة الشباب</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dzgreen: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            700: '#006633',
+                            800: '#004d26',
+                            900: '#003319'
+                        },
+                        dzred: {
+                            500: '#ef4444',
+                            700: '#D21034',
+                            800: '#b91c1c'
+                        },
+                        dzgold: {
+                            400: '#facc15',
+                            500: '#D4AF37',
+                            600: '#ca8a04',
+                            700: '#A67C1E'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+</head>
+<body class="bg-slate-50 text-slate-900 font-['Tajawal'] min-h-screen flex flex-col">
+
+    <!-- 1. الشريط المؤسساتي الرسمي العلوي للجمهورية الجزائرية -->
+    <header class="bg-slate-900 text-white text-xs border-b border-slate-800 py-2 px-4 select-none">
+        <div class="max-w-[1600px] w-full mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <span class="text-base">🇩🇿</span>
+                <span class="font-bold text-slate-200">الجمهورية الجزائرية الديمقراطية الشعبية</span>
+                <span class="text-slate-600 hidden md:inline">|</span>
+                <span class="text-emerald-400 hidden md:inline">وزارة الشباب والرياضة</span>
+                <span class="text-slate-600 hidden md:inline">|</span>
+                <span class="text-slate-300 hidden lg:inline">مديرية الشباب والرياضة لولاية بسكرة</span>
+                <span class="text-slate-600 hidden lg:inline">|</span>
+                <span class="text-amber-300 hidden lg:inline">جمعية الإبداع الثقافية شتمة</span>
+            </div>
+
+            <!-- تبديل الصلاحية ونقاط المستخدم الحية -->
+            <div class="flex items-center gap-3">
+                <!-- رصيد النقاط -->
+                <div id="user-points-badge" class="bg-white/10 px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/15">
+                    <i data-lucide="award" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span class="font-bold text-amber-300">120</span>
+                    <span class="text-[10px] text-emerald-200">نقطة أثر</span>
+                </div>
+
+                <!-- محاكي الصلاحيات -->
+                <div class="flex items-center gap-1.5 bg-white/5 px-2 py-0.5 rounded-lg border border-white/10">
+                    <span class="text-[10px] text-slate-400">الصفة:</span>
+                    <select id="role-switcher-select" class="bg-transparent text-emerald-300 font-bold text-xs focus:outline-none cursor-pointer">
+                        <option value="شاب صانع أثر" class="bg-slate-900 text-white">شاب صانع أثر</option>
+                        <option value="المدير الوطني" class="bg-slate-900 text-white">المدير الوطني (وزارة الشباب)</option>
+                        <option value="مشرف ولائي" class="bg-slate-900 text-white">مشرف ولائي (مديرية بسكرة)</option>
+                        <option value="مشرف مؤسسة شبابية" class="bg-slate-900 text-white">مشرف مؤسسة (دار الشباب شتمة)</option>
+                        <option value="المؤطر والمدرب" class="bg-slate-900 text-white">المؤطر والمدرب</option>
+                    </select>
+                </div>
+
+                <!-- رابط الملف التقني الموجه للوزارة -->
+                <a href="official-proposal.html" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-1 rounded-lg flex items-center gap-1 text-[11px] transition-colors shadow-sm">
+                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                    <span>الملف التقني للوزارة</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. الهيدر وشريط الملاحة الرئيسي -->
+    <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm">
+        <div class="max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 w-full gap-2 xl:gap-4">
+                <!-- شعار المنصة والجمعية والوزارة (أقصى اليمين) -->
+                <div class="flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
+                    <div class="relative group cursor-pointer" onclick="App.switchTab('home')">
+                        <img src="assets/logo.jpg" alt="شعار منصة صناع الأثر الرقمي" class="w-12 h-12 xl:w-14 xl:h-14 rounded-xl xl:rounded-2xl object-cover shadow-md border-2 border-emerald-600/40 ring-2 ring-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute -top-1 -right-1 w-3 h-3 xl:w-3.5 xl:h-3.5 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5 xl:gap-2">
+                            <span class="text-lg xl:text-xl 2xl:text-2xl font-black text-slate-900 font-['Cairo'] tracking-tight whitespace-nowrap">صُنّاع الأثر الرقمي</span>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">بوابة وطنية</span>
+                        </div>
+                        <p class="text-[11px] xl:text-xs text-emerald-800 font-semibold mt-0.5 whitespace-nowrap">نبدع ... نؤثر ... نلهم المستقبل</p>
+                    </div>
+                </div>
+
+                <!-- روابط التبويبات للشاشات الكبيرة (تمتد بمرونة عبر المساحة الوسطى وبدون شريط تمرير) -->
+                <div class="hidden lg:flex items-center justify-center flex-1 min-w-0 mx-1 xl:mx-3 2xl:mx-4 gap-0.5 xl:gap-1 text-xs xl:text-[13px] 2xl:text-sm overflow-visible">
+                    <button data-tab-target="home" class="nav-tab active px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-bold text-emerald-700 whitespace-nowrap transition-colors">الرئيسية</button>
+                    <button data-tab-target="register" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">التسجيل والبطاقة</button>
+                    <button data-tab-target="tracks" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">المسارات الستة</button>
+                    <button data-tab-target="academy" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">الأكاديمية والشهادات</button>
+                    <button data-tab-target="studio" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">استوديو الأثر</button>
+                    <button data-tab-target="challenge" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">التحدي الشهري</button>
+                    <button data-tab-target="points" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">النقاط والصدارة</button>
+                    <button data-tab-target="map" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">خريطة الأثر</button>
+                    <button data-tab-target="partners" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">الشركاء</button>
+                    <button data-tab-target="dashboard" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">لوحة القيادة</button>
+                    <button data-tab-target="phases" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">مراحل المشروع</button>
+                    <button data-tab-target="mobile-app" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors flex items-center gap-1">
+                        <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                        <span>تطبيق الهاتف</span>
+                    </button>
+                </div>
+
+                <!-- زر الإجراء السريع (أقصى اليسار) -->
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <button onclick="App.switchTab('register')" class="btn-primary-dz px-3.5 py-2 xl:px-4 xl:py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md whitespace-nowrap">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>انضم إلينا الآن</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- شريط ملاحة فرعي للشاشات الصغيرة والمتوسطة -->
+    <div class="lg:hidden bg-slate-100 border-b border-slate-200 px-4 py-2 overflow-x-auto flex items-center gap-2 text-xs whitespace-nowrap">
+        <button data-tab-target="home" class="px-3 py-1.5 rounded-lg font-bold bg-white text-emerald-800 shadow-sm">الرئيسية</button>
+        <button data-tab-target="register" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">التسجيل</button>
+        <button data-tab-target="tracks" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">المسارات</button>
+        <button data-tab-target="academy" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">الأكاديمية</button>
+        <button data-tab-target="studio" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">الاستوديو</button>
+        <button data-tab-target="challenge" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">التحدي</button>
+        <button data-tab-target="points" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">النقاط</button>
+        <button data-tab-target="map" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">خريطة الأثر</button>
+        <button data-tab-target="dashboard" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-white">الإدارة</button>
+    </div>
+
+    <!-- المحتوى الرئيسي للمنصة (التبويبات المتعددة) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ======================= 1. تبويب الصفحة الرئيسية ======================= -->
+        <section id="tab-panel-home" class="tab-content-panel space-y-12">
+            <!-- قسم الهيرو الرئيسي الفخم -->
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-dz text-white p-8 md:p-14 shadow-2xl border border-emerald-600/40 flex flex-col lg:flex-row items-center justify-between gap-10">
+                <div class="relative z-10 max-w-2xl space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-xs text-amber-300 font-bold">
+                        <i data-lucide="award" class="w-4 h-4"></i>
+                        <span>مشروع وطني شبابي برعاية وزارة الشباب ومرافقة مديرية ولاية بسكرة</span>
+                    </div>
+
+                    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight font-['Cairo']">
+                        مرحباً بك في منصة <br>
+                        <span class="text-amber-300">« صُنّاع الأثر الرقمي »</span>
+                    </h1>
+
+                    <p class="text-base md:text-lg text-emerald-100 leading-relaxed font-normal">
+                        منصة رقمية رائدة أطلقتها <strong class="text-white">جمعية الإبداع الثقافية شتمة</strong> لتمكين الشباب الجزائري من مهارات الإعلام الجديد، الذكاء الاصطناعي، وصناعة المحتوى الهادف الذي يخدم التنمية الثقافية والاجتماعية ويعكس قيم الهوية الوطنية: <em class="text-amber-300 not-italic font-semibold">«نبدع ... نؤثر ... نلهم المستقبل»</em>.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <button onclick="App.switchTab('register')" class="btn-gold-dz px-8 py-3.5 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-xl">
+                            <i data-lucide="user-check" class="w-5 h-5"></i>
+                            <span>سجّل الآن كصانع أثر (+10 نقاط)</span>
+                        </button>
+                        <button onclick="App.switchTab('studio')" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 backdrop-blur-md px-6 py-3.5 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all">
+                            <i data-lucide="compass" class="w-5 h-5"></i>
+                            <span>اكتشف صُنّاع الأثر وأعمالهم</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- عرض الشعار الرسمي الجديد المرفوع بتقنية النيون والفخامة -->
+                <div class="relative z-10 flex-shrink-0">
+                    <div class="relative p-2 rounded-3xl bg-slate-950/80 backdrop-blur-md border border-cyan-400/40 shadow-[0_0_50px_rgba(6,182,212,0.35)] group hover:shadow-[0_0_70px_rgba(168,85,247,0.45)] transition-all duration-500">
+                        <img src="assets/logo.jpg" alt="لوغو منصة صناع الأثر الرقمي" class="w-52 h-52 sm:w-60 sm:h-60 md:w-72 md:h-72 object-cover rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-600 via-cyan-600 to-purple-600 text-white text-[11px] font-bold px-4 py-1 rounded-full shadow-lg border border-white/30 whitespace-nowrap">
+                            ★ الشعار الرسمي المعتمد ★
+                        </div>
+                    </div>
+                </div>
+
+                <!-- خلفية هندسية إسلامية / هلال ونجمة خافتة -->
+                <div class="absolute -left-10 -bottom-10 opacity-5 pointer-events-none w-96 h-96 flex items-center justify-center text-[260px] font-bold">
+                    🇩🇿
+                </div>
+            </div>
+
+            <!-- عدادات الأثر التفاعلية المباشرة (Metrics) -->
+            <div>
+                <div class="text-center max-w-xl mx-auto mb-6">
+                    <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                        مؤشرات الأداء الميداني
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-800 mt-2 font-['Cairo']">إحصائيات الأثر في الميدان</h2>
+                    <p class="text-xs text-slate-500 mt-1">أرقام حية تعكس جهود الورشات التكوينية والإنتاج الشبابي بولاية بسكرة والوطن</p>
+                </div>
+                <div id="hero-metrics-container" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- تتولد ديناميكياً من data.js -->
+                </div>
+            </div>
+
+            <!-- عرض سريع للمسارات الستة -->
+            <div>
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-800 font-['Cairo']">مجالات ومسارات صناع الأثر</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">اكتشف التخصصات الرقمية والمجتمعية التي تؤهلك للريادة</p>
+                    </div>
+                    <button onclick="App.switchTab('tracks')" class="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1">
+                        <span>عرض جميع التفاصيل</span>
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-emerald-400 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+                            <i data-lucide="video" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-1">صناعة المحتوى الرقمي</h3>
+                        <p class="text-xs text-slate-600 mb-3">التصوير، المونتاج، التصميم والغرافيك، البودكاست، وأدوات الذكاء الاصطناعي في الإعلام.</p>
+                        <span class="text-[11px] font-bold text-emerald-700">8 فروع تخصصية</span>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-emerald-400 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center mb-3">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-1">المجال الطبي والتوعية الصحية</h3>
+                        <p class="text-xs text-slate-600 mb-3">صناعة الرسائل الصحية الموثوقة، فيديوهات الإسعافات الأولية، وحملات التبرع بالدم الرقمية.</p>
+                        <span class="text-[11px] font-bold text-rose-700">3 فروع تخصصية</span>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-emerald-400 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3">
+                            <i data-lucide="heart" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-1">المواطنة والعمل التطوعي</h3>
+                        <p class="text-xs text-slate-600 mb-3">توثيق المبادرات الميدانية، الحملات التحسيسية، وترسيخ قيم خدمة المجتمع والوطن.</p>
+                        <span class="text-[11px] font-bold text-blue-700">3 فروع تخصصية</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بطاقة التحدي الشهري السريعة -->
+            <div class="p-6 md:p-8 rounded-2xl bg-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800 shadow-xl">
+                <div class="space-y-2">
+                    <span class="text-xs bg-amber-400 text-slate-950 font-bold px-2.5 py-0.5 rounded-full">تحدي سبتمبر 2026</span>
+                    <h3 class="text-xl md:text-2xl font-bold font-['Cairo']">دقيقة واحدة لصناعة الفارق في مجتمعك</h3>
+                    <p class="text-xs text-slate-300 max-w-xl">شارك بفيديو توعوي مدته 60 ثانية يعالج قضية اجتماعية أو بيئية واربح درع التميز وتجهيزات تصوير كاملة.</p>
+                </div>
+                <button onclick="App.switchTab('challenge')" class="btn-gold-dz px-6 py-3 rounded-xl text-xs font-bold whitespace-nowrap shadow-lg">
+                    استعراض معايير التقييم والمشاركة
+                </button>
+            </div>
+        </section>
+
+        <!-- ======================= 2. تبويب التسجيل وبطاقة العضوية ======================= -->
+        <section id="tab-panel-register" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    بوابة الانضمام الرسمية
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">التسجيل في منصة صُنّاع الأثر</h2>
+                <p class="text-xs text-slate-500 mt-1">أنشئ حسابك الآن واحصل على بطاقة صانع أثر رقمية معتمدة و10 نقاط ترحيبية فورية.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- استمارة التسجيل الذكية -->
+                <div class="lg:col-span-7 bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <form id="impact-registration-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">الاسم واللقب *</label>
+                                <input type="text" id="reg-fullname" value="أحمد بن عمارة" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">تاريخ الميلاد *</label>
+                                <input type="date" id="reg-dob" value="2002-05-14" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">الولاية *</label>
+                                <select id="reg-wilaya-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    <!-- يتم ملؤها ديناميكياً بالـ 58 ولاية -->
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">البلدية *</label>
+                                <input type="text" id="reg-commune" value="شتمة" placeholder="مثال: شتمة، بسكرة، طولقة..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف *</label>
+                                <input type="tel" id="reg-phone" value="0661234567" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني *</label>
+                                <input type="email" id="reg-email" value="ahmed.dz@impact.dz" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">مجال المشاركة الرئيسي *</label>
+                                <select id="reg-track-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    <option value="صناعة المحتوى الرقمي">صناعة المحتوى الرقمي (تصوير، مونتاج، ذكاء اصطناعي...)</option>
+                                    <option value="المجال الطبي والتوعية الصحية">المجال الطبي والتوعية الصحية</option>
+                                    <option value="المواطنة والعمل التطوعي">المواطنة والعمل التطوعي</option>
+                                    <option value="البيئة والتنمية المستدامة">البيئة والتنمية المستدامة</option>
+                                    <option value="المجال العلمي والتكنولوجي">المجال العلمي والتكنولوجي</option>
+                                    <option value="أمن الطرق والسلامة المرورية">أمن الطرق والسلامة المرورية</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">مستوى المهارة الحالي *</label>
+                                <select id="reg-skill-level" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    <option value="مبتدئ">مبتدئ (راغب في التعلم من الصفر)</option>
+                                    <option value="متوسط" selected>متوسط (أملك تجارب وأرغب في الاحتراف)</option>
+                                    <option value="محترف">محترف (قادر على الإنتاج والمساعدة في التأطير)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary-dz w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg mt-4">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            <span>تأكيد التسجيل وتوليد بطاقة صانع الأثر</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- معاينة بطاقة صانع الأثر الرقمية الحية -->
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <div class="text-center mb-3">
+                        <span class="text-xs font-bold text-slate-600">بطاقة العضوية الرقمية (Digital Impact ID)</span>
+                        <p class="text-[11px] text-slate-400">بطاقة معتمدة فورية برمز QR قابل للتحقق</p>
+                    </div>
+
+                    <div id="user-id-card-preview" class="id-card-wrapper">
+                        <!-- تتولد ديناميكياً من points.js -->
+                    </div>
+
+                    <div class="mt-4 flex items-center gap-3">
+                        <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 shadow-sm">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            <span>طباعة البطاقة</span>
+                        </button>
+                        <button onclick="alert('تم حفظ صورة البطاقة في جهازك بنجاح!')" class="btn-gold-dz px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>تحميل كصورة</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= 3. تبويب مسارات صُنّاع الأثر ======================= -->
+        <section id="tab-panel-tracks" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    المسارات التخصصية
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">مجالات صُنّاع الأثر</h2>
+                <p class="text-xs text-slate-500 mt-1">تتيح المنصة للشباب الانخراط في 6 مسارات استراتيجية لاكتشاف وصقل المواهب.</p>
+            </div>
+
+            <div id="tracks-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- تتولد ديناميكياً من data.js -->
+            </div>
+        </section>
+
+        <!-- ======================= 4. تبويب أكاديمية صُنّاع الأثر ======================= -->
+        <section id="tab-panel-academy" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    منظومة التكوين والشهادات
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">أكاديمية صُنّاع الأثر الرقمي</h2>
+                <p class="text-xs text-slate-500 mt-1">6 مستويات متدرجة من الأساسيات إلى الاحتراف، مع تقييم تفاعلي وشهادة إلكترونية رسمية معتمدة.</p>
+            </div>
+
+            <div id="academy-levels-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- تتولد ديناميكياً من academy.js -->
+            </div>
+        </section>
+
+        <!-- ======================= 5. تبويب استوديو الأثر ======================= -->
+        <section id="tab-panel-studio" class="tab-content-panel hidden space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                        معرض الإنتاج الشبابي
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-800 mt-1 font-['Cairo']">استوديو الأثر</h2>
+                    <p class="text-xs text-slate-500">فيديوهات، تصاميم، بودكاست صوتي، وقصص نجاح من إبداع شباب الجزائر</p>
+                </div>
+
+                <!-- أزرار الفلترة حسب نوع المحتوى -->
+                <div class="flex flex-wrap items-center gap-2 text-xs">
+                    <button onclick="App.renderStudio('all')" class="px-3.5 py-1.5 rounded-lg bg-emerald-700 text-white font-bold">الكل</button>
+                    <button onclick="App.renderStudio('video')" class="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">فيديو</button>
+                    <button onclick="App.renderStudio('podcast')" class="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">بودكاست صوتي</button>
+                    <button onclick="App.renderStudio('design')" class="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">تصاميم وإنفوجرافيك</button>
+                    <button onclick="App.renderStudio('story')" class="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">قصص نجاح ومبادرات</button>
+                </div>
+            </div>
+
+            <div id="studio-gallery-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- تتولد ديناميكياً من app.js -->
+            </div>
+        </section>
+
+        <!-- ======================= 6. تبويب تحدي صانع الأثر ======================= -->
+        <section id="tab-panel-challenge" class="tab-content-panel hidden space-y-8">
+            <div id="active-challenge-container">
+                <!-- يتولد ديناميكياً من app.js -->
+            </div>
+        </section>
+
+        <!-- ======================= 7. تبويب نظام النقاط ولوحة الصدارة ======================= -->
+        <section id="tab-panel-points" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                    نظام التحفيز والترتيب
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">نظام النقاط ولوحة صُنّاع الأثر</h2>
+                <p class="text-xs text-slate-500 mt-1">احصل على نقاط الأثر عن كل نشاط ودورة ومحتوى تنتجه وتنافس لتصدر ترتيب بلديتك وولايتك والوطن.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- سلم احتساب النقاط -->
+                <div class="lg:col-span-5 space-y-4">
+                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                        <i data-lucide="list-checks" class="w-4 h-4 text-emerald-600"></i>
+                        <span>كيف تجمع نقاط الأثر؟</span>
+                    </h3>
+                    <div id="points-rules-container" class="space-y-2">
+                        <!-- تتولد ديناميكياً من points.js -->
+                    </div>
+                </div>
+
+                <!-- لوحة الصدارة والتصنيف -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                        <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                            <i data-lucide="trophy" class="w-4 h-4 text-amber-500"></i>
+                            <span>ترتيب رواد الأثر الرقمي</span>
+                        </h3>
+                        <div class="flex items-center gap-1.5 text-xs">
+                            <button onclick="ImpactPoints.renderLeaderboard('national')" class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">الوطني</button>
+                            <button onclick="ImpactPoints.renderLeaderboard('biskra')" class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200">ولاية بسكرة</button>
+                            <button onclick="ImpactPoints.renderLeaderboard('chetma')" class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200">بلدية شتمة</button>
+                        </div>
+                    </div>
+
+                    <div id="leaderboard-list-container" class="space-y-2">
+                        <!-- تتولد ديناميكياً من points.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= 8. تبويب خريطة الأثر ======================= -->
+        <section id="tab-panel-map" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    الانتشار الجغرافي
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">خريطة الأثر الرقمي في الجزائر</h2>
+                <p class="text-xs text-slate-500 mt-1">توضح خريطة الوطن والولايات الـ 58 أرقام الشباب والورشات والمحتوى المنجز بكل ولاية مع التركيز على بسكرة.</p>
+            </div>
+
+            <!-- بطاقة الولاية المختارة -->
+            <div id="selected-wilaya-info">
+                <!-- تتولد ديناميكياً من map.js -->
+            </div>
+
+            <!-- حقل البحث وشبكة الولايات -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <h3 class="text-sm font-bold text-slate-800">بيانات ولايات الجمهورية (58 ولاية):</h3>
+                    <input type="text" id="wilaya-search-input" placeholder="ابحث باسم الولاية أو رقمها..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div id="wilayas-grid-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                    <!-- تتولد ديناميكياً من map.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= 9. تبويب شبكة الشركاء ======================= -->
+        <section id="tab-panel-partners" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    التحالف المؤسساتي
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">شبكة الشركاء الاستراتيجيين</h2>
+                <p class="text-xs text-slate-500 mt-1">تتكامل جهود وزارة الشباب ومديرية بسكرة وجمعية الإبداع مع مؤسسات المجتمع لتحقيق أثر نوعي مستدام.</p>
+            </div>
+
+            <div id="partners-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- تتولد ديناميكياً من app.js -->
+            </div>
+        </section>
+
+        <!-- ======================= 10. تبويب لوحة قيادة المشروع للإدارة ======================= -->
+        <section id="tab-panel-dashboard" class="tab-content-panel hidden space-y-8">
+            <!-- شاشة القفل بكلمة السر (تظهر افتراضياً قبل تسجيل الدخول biskra2020) -->
+            <div id="dashboard-lock-screen">
+                <!-- يتم توليدها ديناميكياً بواسطة ImpactDashboard.renderLockScreen() -->
+            </div>
+
+            <!-- محتوى لوحة القيادة بعد إدخال كلمة السر biskra2020 بنجاح -->
+            <div id="dashboard-unlocked-content" class="hidden space-y-8">
+                <!-- شريط رأس لوحة القيادة -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xl border border-emerald-200 shadow-inner">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl md:text-2xl font-bold text-slate-800 font-['Cairo']">لوحة قيادة المشروع والمتابعة الإحصائية</h2>
+                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span>
+                                    جلسة مؤمنة (biskra2020)
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">خاصة بوزارة الشباب، مديرية الشباب والرياضة لولاية بسكرة وجمعية الإبداع شتمة</p>
+                        </div>
+                    </div>
+
+                    <!-- أزرار استخراج التقارير وقفل اللوحة -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+                            <span class="text-[11px] font-bold text-slate-600 px-2">استخراج تقرير:</span>
+                            <button onclick="ImpactDashboard.openReportModal('monthly')" class="px-2.5 py-1 rounded-lg font-bold bg-white text-emerald-800 hover:bg-emerald-50 shadow-sm transition-colors">شهري</button>
+                            <button onclick="ImpactDashboard.openReportModal('quarterly')" class="px-2.5 py-1 rounded-lg font-bold bg-white text-blue-800 hover:bg-blue-50 shadow-sm transition-colors">فصلي</button>
+                            <button onclick="ImpactDashboard.openReportModal('annual')" class="px-2.5 py-1 rounded-lg font-bold bg-white text-purple-800 hover:bg-purple-50 shadow-sm transition-colors">سنوي</button>
+                        </div>
+                        <button onclick="ImpactDashboard.logout()" class="px-3.5 py-2 rounded-xl text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm">
+                            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                            <span>قفل اللوحة</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- شبكة العدادات الإحصائية المباشرة (المؤشرات الـ 8 المحددة) -->
+                <div>
+                    <h3 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+                        <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i>
+                        <span>المؤشرات الميدانية المباشرة (Live KPIs):</span>
+                    </h3>
+                    <div id="dashboard-kpis-grid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
+                        <!-- تتولد ديناميكياً من dashboard.js -->
+                    </div>
+                </div>
+
+                <!-- الرسوم البيانية الإحصائية التفاعلية -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- مخطط نسبة مشاركة الإناث والذكور -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                    <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-600"></i>
+                                    <span>نسبة مشاركة الإناث والذكور</span>
+                                </h3>
+                                <span class="text-[10px] font-bold text-slate-400">248 مستفيد</span>
+                            </div>
+                            <div class="h-56 relative flex items-center justify-center">
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-center text-xs pt-4 border-t border-slate-100 mt-2">
+                            <div class="bg-emerald-50 p-2 rounded-lg">
+                                <span class="text-emerald-900 font-bold block text-sm">54%</span>
+                                <span class="text-[10px] text-emerald-700 font-semibold">ذكور (167 شاب)</span>
+                            </div>
+                            <div class="bg-amber-50 p-2 rounded-lg">
+                                <span class="text-amber-900 font-bold block text-sm">46%</span>
+                                <span class="text-[10px] text-amber-700 font-semibold">إناث (143 شابة)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- مخطط التوزيع حسب الولايات -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-sky-600"></i>
+                                    <span>التوزيع حسب الولايات (Top 8)</span>
+                                </h3>
+                                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">بسكرة في الصدارة</span>
+                            </div>
+                            <div class="h-56">
+                                <canvas id="wilayasChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 pt-3 border-t border-slate-100 mt-2">
+                            توزيع جغرافي يبرز ريادة ولاية بسكرة وشتمة وامتداد المنصة لكافة ولايات الوطن.
+                        </p>
+                    </div>
+
+                    <!-- مخطط توزيع الإقبال على المسارات -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                    <i data-lucide="bar-chart-2" class="w-4 h-4 text-teal-600"></i>
+                                    <span>الإقبال حسب المسارات الستة</span>
+                                </h3>
+                                <span class="text-[10px] font-bold text-slate-400">إحصاء حي</span>
+                            </div>
+                            <div class="h-56">
+                                <canvas id="tracksChart"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 pt-3 border-t border-slate-100 mt-2">
+                            تصدر مسار صناعة المحتوى يليه مسار المواطنة والعمل التطوعي.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- إدارة المحتوى والرقابة وحماية البيانات -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                                <span>مراجعة المحتوى الشبابي والرقابة القبلية (Content Moderation)</span>
+                            </h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">ضمان التوافق مع الرسالة الوطنية وحماية بيانات المستخدمين قبل النشر في الاستوديو</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-xs">
+                            <button onclick="ImpactDashboard.setModerationFilter('all')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">الكل</button>
+                            <button onclick="ImpactDashboard.setModerationFilter('قيد المراجعة')" class="px-2.5 py-1 rounded-lg font-bold bg-amber-50 text-amber-800 hover:bg-amber-100">قيد المراجعة</button>
+                            <button onclick="ImpactDashboard.setModerationFilter('معتمد')" class="px-2.5 py-1 rounded-lg font-bold bg-emerald-50 text-emerald-800 hover:bg-emerald-100">معتمد</button>
+                        </div>
+                    </div>
+                    <div id="moderation-queue-container" class="space-y-3">
+                        <!-- تتولد ديناميكياً من dashboard.js -->
+                    </div>
+                </div>
+
+                <!-- نظام إدارة الصلاحيات والأمان (RBAC - 5 مستويات) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i>
+                                <span>إدارة المستخدمين ونظام الصلاحيات الخماسي (RBAC Management)</span>
+                            </h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">المدير الوطني • مشرف ولائي • مشرف مؤسسة شبابية • المؤطر والمدرب • الشاب</p>
+                        </div>
+                        <span class="text-xs bg-indigo-50 text-indigo-800 font-bold px-3 py-1 rounded-full border border-indigo-100">
+                            5 مستويات صلاحية
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right">
+                            <thead class="bg-slate-50 text-slate-600 font-bold text-xs border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3">الاسم واللقب</th>
+                                    <th class="p-3">البريد الإلكتروني</th>
+                                    <th class="p-3">الولاية</th>
+                                    <th class="p-3">الصلاحية والرتبة</th>
+                                    <th class="p-3 text-center">الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-management-table-body">
+                                <!-- تتولد ديناميكياً من dashboard.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= 11. تبويب مراحل تنفيذ المشروع ======================= -->
+        <section id="tab-panel-phases" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    المخطط التنفيذي
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">مراحل تنفيذ مشروع صُنّاع الأثر</h2>
+                <p class="text-xs text-slate-500 mt-1">البرنامج الزمني المعتمد رسمياً من جمعية الإبداع ومديرية الشباب والرياضة لولاية بسكرة.</p>
+            </div>
+
+            <div id="phases-timeline-container" class="max-w-3xl mx-auto">
+                <!-- يتولد ديناميكياً من app.js -->
+            </div>
+        </section>
+
+        <!-- ======================= 12. تبويب محاكي تطبيق الهاتف التفاعلي (المرحلة 2) ======================= -->
+        <section id="tab-panel-mobile-app" class="tab-content-panel hidden space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                    رؤية التوسع المستقبلي (المرحلة 2)
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">تطبيق الهاتف الذكي (Android / iOS)</h2>
+                <p class="text-xs text-slate-500 mt-1">
+                    محاكاة حية وتفاعلية لتطبيق الجوال: انقر على الأزرار والشريط السفلي لتجربة الإشعارات، الدورات، التحديات، النقاط، رفع المحتوى، والشهادات.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-10">
+                <!-- شاشة الهاتف الذكي التفاعلية -->
+                <div class="phone-mockup flex flex-col justify-between shadow-2xl ring-8 ring-slate-800/10">
+                    <!-- هيدر تطبيق الموبايل مع مؤشرات البطارية والشعار -->
+                    <div class="bg-gradient-dz text-white p-4 pt-7 pb-3">
+                        <div class="flex items-center justify-between text-[11px] mb-1.5 opacity-80">
+                            <span>09:41</span>
+                            <div class="flex items-center gap-1">
+                                <span>5G</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <img src="assets/logo.jpg" alt="Logo" class="w-6 h-6 rounded-lg object-cover border border-white/30">
+                                <span class="font-bold text-xs">صُنّاع الأثر</span>
+                            </div>
+                            <button onclick="App.switchMobileAppTab('notifications')" class="relative text-amber-300">
+                                <i data-lucide="bell" class="w-4 h-4"></i>
+                                <span class="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- محتوى شاشة الهاتف التفاعلي المتغير -->
+                    <div id="mobile-app-screen-content" class="p-3 overflow-y-auto space-y-3 flex-1 text-xs bg-slate-50">
+                        <!-- شاشة الرئيسية للموبايل (m-home) -->
+                        <div id="m-screen-home" class="space-y-3">
+                            <div class="bg-gradient-to-r from-emerald-800 to-slate-900 text-white p-3.5 rounded-2xl shadow-sm">
+                                <span class="text-[9px] bg-amber-400 text-slate-950 font-bold px-2 py-0.5 rounded-full">رصيدك الحالي</span>
+                                <div class="text-xl font-extrabold text-amber-300 mt-1">120 ★ نقطة أثر</div>
+                                <p class="text-[10px] text-emerald-200 mt-0.5">الرتبة: صانع أثر متميز (بسكرة)</p>
+                            </div>
+
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-bold text-emerald-800">الدورة الموصى بها</span>
+                                    <span class="text-[9px] text-slate-400">المستوى 02</span>
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-xs">التصوير الاحترافي بالموبايل</h4>
+                                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-emerald-600 h-1.5 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <button onclick="App.switchMobileAppTab('courses')" class="w-full py-1.5 bg-emerald-50 text-emerald-800 rounded-lg font-bold text-[10px] hover:bg-emerald-100 transition-colors">
+                                    متابعة التعلم
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-1.5">
+                                <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">التحدي الشهري</span>
+                                <h4 class="font-bold text-slate-800 text-xs">دقيقة واحدة لصناعة الفارق</h4>
+                                <p class="text-[10px] text-slate-500">متبقي 18 يوماً على غلق باب المشاركات.</p>
+                                <button onclick="App.switchMobileAppTab('challenges')" class="w-full py-1.5 bg-amber-500 text-slate-950 rounded-lg font-bold text-[10px] shadow-sm">
+                                    استعراض التحدي وتسليم العمل
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- شاشة الدورات (m-courses) -->
+                        <div id="m-screen-courses" class="hidden space-y-2">
+                            <h4 class="font-bold text-slate-800 text-xs mb-1">أكاديمية التدريب (6 مستويات):</h4>
+                            <div class="space-y-1.5">
+                                <div class="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-[9px] font-bold text-emerald-700 block">المستوى 01</span>
+                                        <p class="font-bold text-slate-800 text-[11px]">أساسيات صناعة المحتوى</p>
+                                    </div>
+                                    <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">✓ مكتمل</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-[9px] font-bold text-emerald-700 block">المستوى 02</span>
+                                        <p class="font-bold text-slate-800 text-[11px]">التصوير بالموبايل</p>
+                                    </div>
+                                    <span class="text-[9px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">جارٍ (60%)</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-[9px] font-bold text-slate-500 block">المستوى 03</span>
+                                        <p class="font-bold text-slate-800 text-[11px]">المونتاج ومعالجة الفيديو</p>
+                                    </div>
+                                    <span class="text-[9px] bg-slate-100 text-slate-600 font-bold px-1.5 py-0.5 rounded">متاح</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-[9px] font-bold text-slate-500 block">المستوى 04</span>
+                                        <p class="font-bold text-slate-800 text-[11px]">صناعة البودكاست</p>
+                                    </div>
+                                    <span class="text-[9px] bg-slate-100 text-slate-600 font-bold px-1.5 py-0.5 rounded">متاح</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- شاشة التحديات (m-challenges) -->
+                        <div id="m-screen-challenges" class="hidden space-y-3">
+                            <div class="bg-slate-900 text-white p-3.5 rounded-2xl space-y-2">
+                                <span class="text-[9px] bg-amber-400 text-slate-950 font-bold px-2 py-0.5 rounded-full">تحدي سبتمبر</span>
+                                <h4 class="font-bold text-xs">دقيقة واحدة لصناعة الفارق في مجتمعك</h4>
+                                <p class="text-[10px] text-slate-300">أنتج فيديو 60 ثانية يعالج مشكلة محلية في واحات أو مجتمع بسكرة.</p>
+                                <button onclick="App.openChallengeSubmitModal()" class="w-full py-2 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold rounded-xl text-[10px] shadow-md">
+                                    رفع وتسليم المشاركة (+10ن)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- شاشة الإشعارات (m-notifications) -->
+                        <div id="m-screen-notifications" class="hidden space-y-2">
+                            <h4 class="font-bold text-slate-800 text-xs mb-1">مركز الإشعارات والتنبيهات:</h4>
+                            <div class="space-y-1.5">
+                                <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 space-y-0.5">
+                                    <div class="flex items-center justify-between text-[9px] text-emerald-800 font-bold">
+                                        <span>اعتماد محتوى جديد</span>
+                                        <span>منذ ساعتين</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-700">تم اعتماد فيديوك "سحر واحات شتمة" في الاستوديو بنجاح (+20 نقطة).</p>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white border border-slate-200 space-y-0.5">
+                                    <div class="flex items-center justify-between text-[9px] text-blue-700 font-bold">
+                                        <span>ورشة تكوينية</span>
+                                        <span>أمس</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-700">تذكير: ورشة المونتاج العملي السبت القادم بدار الشباب شتمة.</p>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-white border border-slate-200 space-y-0.5">
+                                    <div class="flex items-center justify-between text-[9px] text-amber-700 font-bold">
+                                        <span>شهادة كفاءة</span>
+                                        <span>منذ يومين</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-700">تهانينا! شهادة المستوى الأول جاهزة للتحميل من ملفك الشخصي.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- شاشة الملف الشخصي والشهادات (m-profile) -->
+                        <div id="m-screen-profile" class="hidden space-y-2.5">
+                            <div class="bg-white p-3 rounded-2xl border border-slate-200 text-center space-y-1.5 shadow-sm">
+                                <div class="w-12 h-12 mx-auto rounded-full bg-gradient-dz text-white font-bold flex items-center justify-center text-sm shadow-md">
+                                    أ
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-xs">أحمد بن عمارة</h4>
+                                <p class="text-[10px] text-slate-500">بلدية شتمة — ولاية بسكرة</p>
+                                <span class="inline-block text-[9px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">
+                                    رتبة: صانع أثر متميز (120 ★)
+                                </span>
+                            </div>
+
+                            <button onclick="ImpactAcademy.previewCertificate('أساسيات صناعة المحتوى')" class="w-full py-2 bg-emerald-700 text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-1.5 shadow-sm">
+                                <i data-lucide="award" class="w-3.5 h-3.5 text-amber-300"></i>
+                                <span>عرض الشهادة المعتمدة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- شريط ملاحة تطبيق الهاتف السفلي التفاعلي -->
+                    <div class="bg-white border-t border-slate-200 p-2 flex items-center justify-around text-slate-500 text-[10px]">
+                        <button onclick="App.switchMobileAppTab('home')" id="m-tab-home" class="flex flex-col items-center text-emerald-700 font-bold">
+                            <i data-lucide="home" class="w-4 h-4 mb-0.5"></i>
+                            <span>الرئيسية</span>
+                        </button>
+                        <button onclick="App.switchMobileAppTab('courses')" id="m-tab-courses" class="flex flex-col items-center hover:text-emerald-700">
+                            <i data-lucide="book-open" class="w-4 h-4 mb-0.5"></i>
+                            <span>الدورات</span>
+                        </button>
+                        <button onclick="App.switchMobileAppTab('challenges')" id="m-tab-challenges" class="flex flex-col items-center hover:text-emerald-700">
+                            <i data-lucide="target" class="w-4 h-4 mb-0.5"></i>
+                            <span>التحديات</span>
+                        </button>
+                        <button onclick="App.switchMobileAppTab('notifications')" id="m-tab-notifications" class="flex flex-col items-center hover:text-emerald-700">
+                            <i data-lucide="bell" class="w-4 h-4 mb-0.5"></i>
+                            <span>الإشعارات</span>
+                        </button>
+                        <button onclick="App.switchMobileAppTab('profile')" id="m-tab-profile" class="flex flex-col items-center hover:text-emerald-700">
+                            <i data-lucide="user" class="w-4 h-4 mb-0.5"></i>
+                            <span>حسابي</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- لوحة مميزات تطبيق الهاتف (المرحلة 2) -->
+                <div class="max-w-md space-y-4 text-xs">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
+                                📱
+                            </span>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm">مواصفات التطبيق المستقبلي (المرحلة 2)</h3>
+                                <p class="text-[11px] text-slate-500">تطبيق هجين فائق السرعة يعمل على أندرويد وiOS</p>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-2 text-slate-600">
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span>
+                                <span><strong>إشعارات فورية (Push Notifications):</strong> لتنبيه الشباب بورشات دار الشباب شتمة ومواعيد المسابقات.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span>
+                                <span><strong>رفع المحتوى الميداني مباشرة:</strong> تصوير ومونتاج ورفع الفيديوهات من كاميرا الهاتف مباشرة.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span>
+                                <span><strong>الوصول للشهادات دون إنترنت:</strong> حفظ الشهادات وبطاقة الأثر الرقمية محلياً في الهاتف.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span>
+                                <span><strong>تتبع التحديات والنقاط:</strong> متابعة لوحة الصدارة والتنافس بين بلديات ولاية بسكرة لحظياً.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-amber-900 text-xs">
+                        <strong>💡 ملاحظة التطوير:</strong> يتم إطلاق المنصة في مرحلتها الأولى كموقع ويب سريع ومتجاوب بنسبة 100% مع كافة الهواتف (PWA Ready)، ثم في المرحلة الثانية يُطلق كحزمة تطبيق مستقل عبر متجري Google Play وApp Store.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- الفوتر المؤسساتي الرسمي -->
+    <footer class="bg-slate-900 text-white text-xs border-t border-slate-800 mt-16 py-10 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3 md:col-span-2">
+                <div class="flex items-center gap-3">
+                    <img src="assets/logo.jpg" alt="شعار المنصة" class="w-12 h-12 rounded-xl object-cover border border-emerald-500/40 shadow-sm">
+                    <div>
+                        <h3 class="text-base font-bold text-white font-['Cairo']">صُنّاع الأثر الرقمي — Digital Impact Makers</h3>
+                        <p class="text-[11px] text-amber-300 font-semibold">نبدع ... نؤثر ... نلهم المستقبل</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed max-w-lg">
+                    مشروع رقمي نوعي تشرف عليه <strong class="text-slate-200">جمعية الإبداع الثقافية شتمة</strong> برعاية <strong class="text-slate-200">وزارة الشباب والرياضة</strong> ومرافقة <strong class="text-slate-200">مديرية الشباب والرياضة لولاية بسكرة</strong>، لبناء إعلام شبابي مواطناتي هادف.
+                </p>
+                <div class="text-[11px] text-emerald-400 font-semibold">
+                    شعار المشروع: طاقات شبابية ... رسالة رقمية هادفة
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-slate-200 mb-3 text-sm">روابط سريعة</h4>
+                <ul class="space-y-2 text-slate-400">
+                    <li><a href="#" onclick="App.switchTab('home')" class="hover:text-emerald-400 transition-colors">الصفحة الرئيسية</a></li>
+                    <li><a href="#" onclick="App.switchTab('register')" class="hover:text-emerald-400 transition-colors">التسجيل وبطاقة العضوية</a></li>
+                    <li><a href="#" onclick="App.switchTab('academy')" class="hover:text-emerald-400 transition-colors">أكاديمية صُنّاع الأثر</a></li>
+                    <li><a href="#" onclick="App.switchTab('map')" class="hover:text-emerald-400 transition-colors">خريطة الأثر بالجزائر</a></li>
+                    <li><a href="official-proposal.html" target="_blank" class="hover:text-amber-400 transition-colors font-bold text-amber-300">الملف التقني الموجه للوزارة</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-slate-200 mb-3 text-sm">المقر والاتصال</h4>
+                <div class="space-y-2 text-slate-400 text-xs">
+                    <p>📍 مقر الحاضنة: دار الشباب شتمة — ولاية بسكرة</p>
+                    <p>✉️ البريد الإلكتروني: contact@dim-biskra.dz</p>
+                    <p>📞 هاتف الأمانة: 033.XX.XX.XX</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between text-slate-500 text-[11px]">
+            <div>جميع الحقوق محفوظة © 2026 — جمعية الإبداع الثقافية شتمة | مديرية الشباب والرياضة بسكرة | وزارة الشباب والرياضة</div>
+            <div>منصة تفاعلية وفق المعايير التقنية الوطنية</div>
+        </div>
+    </footer>
+
+    <!-- ======================= نوافذ منبثقة تفاعلية (Modals) ======================= -->
+
+    <!-- نافذة الاختبار التقييمي للأكاديمية -->
+    <div id="quiz-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <div id="quiz-modal-content"></div>
+        </div>
+    </div>
+
+    <!-- نافذة استعراض الشهادة الإلكترونية المعتمدة للطباعة -->
+    <div id="certificate-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 max-h-[95vh] overflow-y-auto shadow-2xl relative">
+            <div class="flex items-center justify-between mb-4 no-print">
+                <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">معاينة الشهادة الرسمية</span>
+                <div class="flex items-center gap-2">
+                    <button onclick="ImpactAcademy.printCertificate()" class="btn-primary-dz px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        <span>طباعة / تصدير PDF</span>
+                    </button>
+                    <button onclick="ImpactAcademy.closeCertificate()" class="px-3 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100">
+                        إغلاق
+                    </button>
+                </div>
+            </div>
+            <div id="certificate-render-target"></div>
+        </div>
+    </div>
+
+    <!-- نافذة تفاصيل بلديات بسكرة وشتمة -->
+    <div id="biskra-detail-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800">بلديات ومؤسسات ولاية بسكرة المشاركة</h3>
+                    <p class="text-xs text-slate-500">حاضنة المشروع الرئيسية — جمعية الإبداع الثقافية شتمة</p>
+                </div>
+                <button onclick="ImpactMap.closeBiskraModal()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200">✕</button>
+            </div>
+            <div id="biskra-communes-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+    </div>
+
+    <!-- نافذة مشغل الوسائط (فيديو / بودكاست) -->
+    <div id="media-player-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative">
+            <button onclick="App.closeMediaModal()" class="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black">✕</button>
+            <div id="media-player-content"></div>
+        </div>
+    </div>
+
+    <!-- نافذة تسليم المشاركة في التحدي الشهري -->
+    <div id="challenge-submit-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <h3 class="font-bold text-slate-800 text-base">تسليم عملك في التحدي الشهري</h3>
+                <button onclick="App.closeChallengeSubmitModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+            </div>
+            <form onsubmit="App.submitChallengeWork(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">عنوان العمل *</label>
+                    <input type="text" required placeholder="مثال: فيديو 60 ثانية عن المحافظة على نخيل شتمة" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">رابط الفيديو أو الملف (Google Drive / YouTube / Vimeo) *</label>
+                    <input type="url" required placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-left" dir="ltr">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">الرسالة والأثر المجتمعي المستهدف *</label>
+                    <textarea rows="3" required placeholder="اشرح باختصار المشكلة التي يعالجها العمل والحل المقترح..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200"></textarea>
+                </div>
+                <button type="submit" class="btn-primary-dz w-full py-3 rounded-xl font-bold flex items-center justify-center gap-1.5 shadow-md">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    <span>إرسال المشاركة ونيل +10 نقاط فورية</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة التقرير الوزاري الرسمي للطباعة -->
+    <div id="official-report-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 max-h-[95vh] overflow-y-auto shadow-2xl relative">
+            <div id="official-report-content"></div>
+        </div>
+    </div>
+
+    <!-- استدعاء البرمجيات السكربتية بالترتيب -->
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/academy.js"></script>
+    <script src="js/points.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
