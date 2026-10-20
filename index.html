@@ -39,6 +39,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
     <!-- Favicon -->
@@ -76,7 +78,7 @@
                         <option value="شاب صانع أثر" class="bg-slate-900 text-white">شاب صانع أثر</option>
                         <option value="المدير الوطني" class="bg-slate-900 text-white">المدير الوطني (وزارة الشباب)</option>
                         <option value="مشرف ولائي" class="bg-slate-900 text-white">مشرف ولائي (مديرية بسكرة)</option>
-                        <option value="مشرف مؤسسة شبابية" class="bg-slate-900 text-white">مشرف مؤسسة (دار الشباب شتمة)</option>
+                        <option value="مشرف مؤسسة شبابية" class="bg-slate-900 text-white">مشرف مؤسسة (مؤسسات الشباب بسكرة)</option>
                         <option value="المؤطر والمدرب" class="bg-slate-900 text-white">المؤطر والمدرب</option>
                     </select>
                 </div>
@@ -91,16 +93,16 @@
     </header>
 
     <!-- 2. الهيدر وشريط الملاحة الرئيسي -->
-    <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm">
+    <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm py-2">
         <div class="max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20 w-full gap-2 xl:gap-4">
-                <!-- شعار المنصة والجمعية والوزارة (أقصى اليمين) -->
-                <div class="flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
+            <div class="flex items-center justify-between min-h-[76px] w-full gap-2 xl:gap-4">
+                <!-- شعار المنصة والجمعية والوزارة (أقصى اليمين مع مسافة رأسية وهوامش أمان) -->
+                <div class="flex items-center gap-2.5 xl:gap-3 flex-shrink-0 nav-brand-spacing me-4 lg:me-6 xl:me-8 py-1">
                     <div class="relative group cursor-pointer" onclick="App.switchTab('home')">
                         <img src="assets/logo.jpg" alt="شعار منصة صناع الأثر الرقمي" class="w-12 h-12 xl:w-14 xl:h-14 rounded-xl xl:rounded-2xl object-cover shadow-md border-2 border-emerald-600/40 ring-2 ring-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
                         <span class="absolute -top-1 -right-1 w-3 h-3 xl:w-3.5 xl:h-3.5 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></span>
                     </div>
-                    <div>
+                    <div class="pt-0.5">
                         <div class="flex items-center gap-1.5 xl:gap-2">
                             <span class="text-lg xl:text-xl 2xl:text-2xl font-black text-slate-900 font-['Cairo'] tracking-tight whitespace-nowrap">صُنّاع الأثر الرقمي</span>
                             <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">بوابة وطنية</span>
@@ -109,9 +111,12 @@
                     </div>
                 </div>
 
-                <!-- روابط التبويبات للشاشات الكبيرة (تمتد بمرونة عبر المساحة الوسطى وبدون شريط تمرير) -->
-                <div class="hidden lg:flex items-center justify-center flex-1 min-w-0 mx-1 xl:mx-3 2xl:mx-4 gap-0.5 xl:gap-1 text-xs xl:text-[13px] 2xl:text-sm overflow-visible">
-                    <button data-tab-target="home" class="nav-tab active px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-bold text-emerald-700 whitespace-nowrap transition-colors">الرئيسية</button>
+                <!-- روابط التبويبات للشاشات الكبيرة (تمتد بمرونة عبر المساحة الوسطى وبدون تداخل) -->
+                <div class="hidden lg:flex items-center justify-center flex-1 min-w-0 mx-1 xl:mx-2 gap-0.5 xl:gap-1 text-xs xl:text-[12.5px] 2xl:text-sm overflow-visible">
+                    <button data-tab-target="home" class="nav-tab active px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-bold text-emerald-700 whitespace-nowrap transition-colors flex items-center gap-1">
+                        <i data-lucide="home" class="w-3.5 h-3.5"></i>
+                        <span>الرئيسية</span>
+                    </button>
                     <button data-tab-target="register" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">التسجيل والبطاقة</button>
                     <button data-tab-target="tracks" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">المسارات الستة</button>
                     <button data-tab-target="academy" class="nav-tab px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg font-medium text-slate-600 hover:text-emerald-700 whitespace-nowrap transition-colors">الأكاديمية والشهادات</button>
@@ -128,9 +133,9 @@
                     </button>
                 </div>
 
-                <!-- زر الإجراء السريع (أقصى اليسار) -->
-                <div class="flex items-center gap-2 flex-shrink-0">
-                    <button onclick="App.switchTab('register')" class="btn-primary-dz px-3.5 py-2 xl:px-4 xl:py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md whitespace-nowrap">
+                <!-- زر الإجراء السريع (أقصى اليسار - تم إنزاله قليلاً وضبط محاذاته وهوامشه) -->
+                <div class="flex items-center flex-shrink-0 nav-cta-spacing ms-4 lg:ms-6 xl:ms-8 mt-1.5 relative z-10">
+                    <button onclick="App.switchTab('register')" class="btn-primary-dz px-3.5 py-2 xl:px-4 xl:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md whitespace-nowrap">
                         <i data-lucide="user-plus" class="w-4 h-4"></i>
                         <span>انضم إلينا الآن</span>
                     </button>
@@ -285,46 +290,46 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <!-- استمارة التسجيل الذكية -->
                 <div class="lg:col-span-7 bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
-                    <form id="impact-registration-form" class="space-y-4">
+                    <form id="impact-registration-form" onsubmit="submitRegistration(event)" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">الاسم واللقب *</label>
-                                <input type="text" id="reg-fullname" value="أحمد بن عمارة" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <input type="text" id="reg-fullname" name="full_name" value="أحمد بن عمارة" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">تاريخ الميلاد *</label>
-                                <input type="date" id="reg-dob" value="2002-05-14" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <input type="date" id="reg-dob" name="birth_date" value="2002-05-14" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">الولاية *</label>
-                                <select id="reg-wilaya-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <select id="reg-wilaya-select" name="wilaya" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                                     <!-- يتم ملؤها ديناميكياً بالـ 58 ولاية -->
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">البلدية *</label>
-                                <input type="text" id="reg-commune" value="شتمة" placeholder="مثال: شتمة، بسكرة، طولقة..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <input type="text" id="reg-commune" name="municipality" value="شتمة" placeholder="مثال: شتمة، بسكرة، طولقة..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف *</label>
-                                <input type="tel" id="reg-phone" value="0661234567" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
+                                <input type="tel" id="reg-phone" name="phone" value="0661234567" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني *</label>
-                                <input type="email" id="reg-email" value="ahmed.dz@impact.dz" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
+                                <input type="email" id="reg-email" name="email" value="ahmed.dz@impact.dz" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">مجال المشاركة الرئيسي *</label>
-                                <select id="reg-track-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <select id="reg-track-select" name="track" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                                     <option value="صناعة المحتوى الرقمي">صناعة المحتوى الرقمي (تصوير، مونتاج، ذكاء اصطناعي...)</option>
                                     <option value="المجال الطبي والتوعية الصحية">المجال الطبي والتوعية الصحية</option>
                                     <option value="المواطنة والعمل التطوعي">المواطنة والعمل التطوعي</option>
@@ -335,7 +340,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 mb-1">مستوى المهارة الحالي *</label>
-                                <select id="reg-skill-level" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <select id="reg-skill-level" name="skill_level" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                                     <option value="مبتدئ">مبتدئ (راغب في التعلم من الصفر)</option>
                                     <option value="متوسط" selected>متوسط (أملك تجارب وأرغب في الاحتراف)</option>
                                     <option value="محترف">محترف (قادر على الإنتاج والمساعدة في التأطير)</option>
@@ -343,7 +348,10 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-primary-dz w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg mt-4">
+                        <!-- إشعار حالة حفظ البيانات في Supabase -->
+                        <div id="registration-status-msg" class="hidden text-xs p-3.5 rounded-xl font-bold"></div>
+
+                        <button type="submit" id="reg-submit-btn" onclick="submitRegistration(event)" class="btn-primary-dz w-full py-3.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg mt-4">
                             <i data-lucide="check-circle" class="w-4 h-4"></i>
                             <span>تأكيد التسجيل وتوليد بطاقة صانع الأثر</span>
                         </button>
@@ -489,7 +497,42 @@
                 </span>
                 <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2 font-['Cairo']">خريطة الأثر الرقمي في الجزائر</h2>
                 <p class="text-xs text-slate-500 mt-1">توضح خريطة الوطن والولايات الـ 58 أرقام الشباب والورشات والمحتوى المنجز بكل ولاية مع التركيز على بسكرة.</p>
+            <!-- حاوية خريطة الجزائر التفاعلية بنظام 2D Vector/SVG (58 ولاية) -->
+            <div class="bg-white p-5 md:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                            <i data-lucide="map" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">الخريطة التفاعلية لولايات الوطن الـ 58</h3>
+                            <p class="text-[11px] text-slate-400">مرر مؤشر الفأرة أو انقر فوق أي ولاية لاستعراض أعداد المسجلين والأنشطة مباشرة من Supabase</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-xs">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[11px]">
+                            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                            بسكرة (المقر الرئيسي)
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-[11px]">
+                            <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                            ولايات الوطن (58)
+                        </span>
+                        <span id="map-supabase-status" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-bold text-[11px]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                            ربط حي: Supabase
+                        </span>
+                    </div>
+                </div>
+
+                <!-- حاوية حقن الرسم المتجهي SVG -->
+                <div id="algeria-vector-map-wrapper" class="dz-map-container flex items-center justify-center p-2 md:p-4 min-h-[460px] relative">
+                    <!-- يتم حقن SVG ديناميكياً من map.js -->
+                </div>
             </div>
+
+            <!-- تولتيب التمرير العائم فوق الخريطة -->
+            <div id="map-hover-tooltip" class="hidden"></div>
 
             <!-- بطاقة الولاية المختارة -->
             <div id="selected-wilaya-info">
@@ -526,12 +569,12 @@
 
         <!-- ======================= 10. تبويب لوحة قيادة المشروع للإدارة ======================= -->
         <section id="tab-panel-dashboard" class="tab-content-panel hidden space-y-8">
-            <!-- شاشة القفل بكلمة السر (تظهر افتراضياً قبل تسجيل الدخول biskra2020) -->
+            <!-- شاشة القفل بكلمة المرور الخاصة بالإدارة والمشرفين -->
             <div id="dashboard-lock-screen">
                 <!-- يتم توليدها ديناميكياً بواسطة ImpactDashboard.renderLockScreen() -->
             </div>
 
-            <!-- محتوى لوحة القيادة بعد إدخال كلمة السر biskra2020 بنجاح -->
+            <!-- محتوى لوحة القيادة بعد تسجيل الدخول الإداري بنجاح -->
             <div id="dashboard-unlocked-content" class="hidden space-y-8">
                 <!-- شريط رأس لوحة القيادة -->
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
@@ -544,7 +587,7 @@
                                 <h2 class="text-xl md:text-2xl font-bold text-slate-800 font-['Cairo']">لوحة قيادة المشروع والمتابعة الإحصائية</h2>
                                 <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span>
-                                    جلسة مؤمنة (biskra2020)
+                                    جلسة إدارية مؤمنة
                                 </span>
                             </div>
                             <p class="text-xs text-slate-500 mt-0.5">خاصة بوزارة الشباب، مديرية الشباب والرياضة لولاية بسكرة وجمعية الإبداع شتمة</p>
@@ -562,6 +605,24 @@
                         <button onclick="ImpactDashboard.logout()" class="px-3.5 py-2 rounded-xl text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm">
                             <i data-lucide="lock" class="w-3.5 h-3.5"></i>
                             <span>قفل اللوحة</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- شريط المزامنة الحية مع Supabase -->
+                <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-emerald-50/80 border border-emerald-200/90 rounded-2xl text-xs text-emerald-950 font-medium shadow-sm">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
+                        <span>قاعدة بيانات Supabase المباشرة: متصلة بجدول <code class="font-bold bg-white px-2 py-0.5 rounded border border-emerald-300 text-emerald-800">registration_requests</code></span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="dashboard-live-sync-indicator" class="text-[11px] text-emerald-800 font-bold flex items-center gap-1">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            <span id="dashboard-last-sync-time">تحديث تلقائي نشط</span>
+                        </span>
+                        <button onclick="ImpactDashboard.fetchLiveSupabaseStats(true)" class="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold transition-all shadow-sm text-xs flex items-center gap-1.5">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>تحديث البيانات الحية الآن</span>
                         </button>
                     </div>
                 </div>
@@ -848,7 +909,7 @@
                                         <span>ورشة تكوينية</span>
                                         <span>أمس</span>
                                     </div>
-                                    <p class="text-[10px] text-slate-700">تذكير: ورشة المونتاج العملي السبت القادم بدار الشباب شتمة.</p>
+                                    <p class="text-[10px] text-slate-700">تذكير: ورشة المونتاج العملي السبت القادم بمؤسسات الشباب بسكرة.</p>
                                 </div>
                                 <div class="p-2.5 rounded-xl bg-white border border-slate-200 space-y-0.5">
                                     <div class="flex items-center justify-between text-[9px] text-amber-700 font-bold">
@@ -921,7 +982,7 @@
                         <ul class="space-y-2 text-slate-600">
                             <li class="flex items-start gap-2">
                                 <span class="text-emerald-600 font-bold">✓</span>
-                                <span><strong>إشعارات فورية (Push Notifications):</strong> لتنبيه الشباب بورشات دار الشباب شتمة ومواعيد المسابقات.</span>
+                                <span><strong>إشعارات فورية (Push Notifications):</strong> لتنبيه الشباب بورشات مؤسسات الشباب بسكرة ومواعيد المسابقات.</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <span class="text-emerald-600 font-bold">✓</span>
@@ -980,9 +1041,9 @@
             <div>
                 <h4 class="font-bold text-slate-200 mb-3 text-sm">المقر والاتصال</h4>
                 <div class="space-y-2 text-slate-400 text-xs">
-                    <p>📍 مقر الحاضنة: دار الشباب شتمة — ولاية بسكرة</p>
-                    <p>✉️ البريد الإلكتروني: contact@dim-biskra.dz</p>
-                    <p>📞 هاتف الأمانة: 033.XX.XX.XX</p>
+                    <p>📍 مقر الحاضنة: مؤسسات الشباب بسكرة — ولاية بسكرة</p>
+                    <p>✉️ البريد الإلكتروني: <a href="mailto:associationcreativite376@gmail.com" class="hover:text-emerald-400 transition-colors">associationcreativite376@gmail.com</a></p>
+                    <p>📞 هاتف الأمانة: <a href="tel:0672345106" class="hover:text-emerald-400 transition-colors font-mono" dir="ltr">0672345106</a></p>
                 </div>
             </div>
         </div>
@@ -1078,12 +1139,218 @@
         </div>
     </div>
 
+    <!-- إعدادات واتصال Supabase المعتمدة للمنصة -->
+    <script>
+        window.SUPABASE_URL = 'https://ywuzvfyzhumbwruaqfjk.supabase.co';
+        window.SUPABASE_KEY = 'sb_publishable_1Q2RfOVjN_kLSZC24fqyxQ_RYH6I7Kd';
+        window.SUPABASE_CONFIG = {
+            url: window.SUPABASE_URL,
+            key: window.SUPABASE_KEY
+        };
+        // إنشاء عميل Supabase الرسمي العام
+        window.supabaseClient = (window.supabase && typeof window.supabase.createClient === 'function')
+            ? window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY)
+            : null;
+    </script>
+
     <!-- استدعاء البرمجيات السكربتية بالترتيب -->
     <script src="js/data.js"></script>
+    <script src="js/map-svg.js"></script>
     <script src="js/map.js"></script>
     <script src="js/academy.js"></script>
     <script src="js/points.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- دمج ومعالجة استمارة التسجيل وحفظها في Supabase -->
+    <script>
+        const SUPABASE_URL = window.SUPABASE_URL;
+        const SUPABASE_KEY = window.SUPABASE_KEY;
+        const supabaseClient = window.supabaseClient;
+
+        /**
+         * دالة معالجة وإرسال استمارة التسجيل مباشرة عبر الـ API إلى جدول registration_requests
+         */
+        async function submitRegistration(event) {
+            if (event) {
+                event.preventDefault();
+            }
+
+            const form = document.getElementById('impact-registration-form');
+            if (form && !form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const submitBtn = document.getElementById('reg-submit-btn');
+            const statusMsg = document.getElementById('registration-status-msg');
+
+            // 1. جلب القيم المدخلة من حقول الاستمارة
+            const fullName = document.getElementById('reg-fullname')?.value.trim() || '';
+            const birthDate = document.getElementById('reg-dob')?.value || '';
+            const wilaya = document.getElementById('reg-wilaya-select')?.value || '';
+            const municipality = document.getElementById('reg-commune')?.value.trim() || '';
+            const phone = document.getElementById('reg-phone')?.value.trim() || '';
+            const email = document.getElementById('reg-email')?.value.trim() || '';
+            const skillLevel = document.getElementById('reg-skill-level')?.value || '';
+            const track = document.getElementById('reg-track-select')?.value || 'صناعة المحتوى الرقمي';
+
+            // التحقق من اكتمال الحقول الإلزامية
+            if (!fullName || !birthDate || !wilaya || !municipality || !phone || !email) {
+                if (statusMsg) {
+                    statusMsg.className = "text-xs p-3.5 rounded-xl font-bold bg-amber-50 text-amber-800 border border-amber-200 block";
+                    statusMsg.innerHTML = "⚠️ يرجى ملء كافة الحقول الإلزامية المطلوبة لإتمام التسجيل.";
+                }
+                alert('يرجى ملء كافة الحقول الإلزامية.');
+                return;
+            }
+
+            // 2. تحديث زر الإرسال وحالة الواجهة
+            let originalBtnHtml = '';
+            if (submitBtn) {
+                originalBtnHtml = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                submitBtn.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>جاري إرسال البيانات إلى قاعدة بيانات Supabase...</span>
+                `;
+            }
+
+            if (statusMsg) {
+                statusMsg.className = "text-xs p-3.5 rounded-xl font-bold bg-blue-50 text-blue-800 border border-blue-200 block";
+                statusMsg.innerHTML = "⏳ جاري إرسال طلبك وحفظه مباشرة في جدول registration_requests على Supabase...";
+            }
+
+            try {
+                // الكائن المطلوب إرساله إلى جدول registration_requests
+                const newRecord = {
+                    full_name: fullName,
+                    birth_date: birthDate,
+                    wilaya: wilaya,
+                    municipality: municipality,
+                    phone: phone,
+                    email: email,
+                    skill_level: skillLevel
+                };
+
+                let supabaseResponse;
+
+                if (supabaseClient) {
+                    supabaseResponse = await supabaseClient
+                        .from('registration_requests')
+                        .insert([newRecord]);
+                } else {
+                    // طريقة احتياطية مباشرة عبر Fetch API
+                    const directResponse = await fetch(`${SUPABASE_URL}/rest/v1/registration_requests`, {
+                        method: 'POST',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify(newRecord)
+                    });
+
+                    if (!directResponse.ok) {
+                        const errJson = await directResponse.json().catch(() => ({}));
+                        throw new Error(errJson.message || `خطأ في الخادم (${directResponse.status})`);
+                    }
+                    supabaseResponse = { error: null };
+                }
+
+                if (supabaseResponse.error) {
+                    throw supabaseResponse.error;
+                }
+
+                // 3. إظهار رسالة النجاح للمستخدم
+                if (statusMsg) {
+                    statusMsg.className = "text-xs p-3.5 rounded-xl font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 block";
+                    statusMsg.innerHTML = `✅ تم حفظ بياناتك بنجاح في قاعدة بيانات Supabase! مرحباً بك يا ${fullName}.`;
+                }
+
+                // تحديث المستخدم محلياً وتوليد بطاقة العضوية
+                const randomId = Math.floor(1000 + Math.random() * 9000);
+                const serialNumber = `DZ-DIM-2026-${randomId}`;
+
+                window.currentUser = {
+                    name: fullName,
+                    dob: birthDate,
+                    phone: phone,
+                    email: email,
+                    wilaya: wilaya,
+                    commune: municipality,
+                    track: track,
+                    skillLevel: skillLevel,
+                    serialNumber: serialNumber
+                };
+
+                localStorage.setItem('dim_current_user', JSON.stringify(window.currentUser));
+
+                // منح نقاط التسجيل الأولى (+10 نقاط) وتحديث البطاقة
+                if (window.ImpactPoints) {
+                    window.ImpactPoints.addPoints(10, 'التسجيل وتفعيل العضوية في المنصة (Supabase)');
+                    window.ImpactPoints.renderIdCard();
+                }
+
+                // حفظ محلي للمزامنة الفورية مع لوحة القيادة والخريطة
+                try {
+                    const localRegs = JSON.parse(localStorage.getItem('dim_local_registrations') || '[]');
+                    localRegs.unshift({
+                        full_name: fullName,
+                        birth_date: birthDate,
+                        wilaya: wilaya,
+                        municipality: municipality,
+                        phone: phone,
+                        email: email,
+                        skill_level: skillLevel,
+                        created_at: new Date().toISOString()
+                    });
+                    localStorage.setItem('dim_local_registrations', JSON.stringify(localRegs));
+                } catch(e) {}
+
+                // تحديث مباشر للوحة القيادة وخريطة الأثر
+                if (window.ImpactDashboard && typeof window.ImpactDashboard.fetchLiveSupabaseStats === 'function') {
+                    window.ImpactDashboard.fetchLiveSupabaseStats(true);
+                }
+                if (window.ImpactMap && typeof window.ImpactMap.fetchSupabaseData === 'function') {
+                    window.ImpactMap.fetchSupabaseData();
+                }
+
+                alert(`🎉 تهانينا يا ${fullName}!\nتم إرسال وحفظ بيانات تسجيلك بنجاح في قاعدة بيانات Supabase (جدول registration_requests)، وتوليد بطاقة صانع الأثر الرقمية الخاصة بك بنجاح.`);
+
+                // الانتقال لتبويب النقاط والبطاقة
+                if (window.App && typeof window.App.switchTab === 'function') {
+                    window.App.switchTab('points');
+                }
+
+            } catch (err) {
+                console.error("Supabase Submission Error:", err);
+                let userFriendlyError = err.message || "حدث خطأ غير متوقع أثناء إرسال البيانات.";
+                if (err.code === "42501" || err.message?.includes("row-level security")) {
+                    userFriendlyError = "تم الاتصال بـ Supabase بنجاح، ولكن سياسة الأمان (RLS Policy) في جدول registration_requests تحتاج لتفعيل إذن الإضافة (INSERT) للزوار العموميين.";
+                }
+
+                if (statusMsg) {
+                    statusMsg.className = "text-xs p-3.5 rounded-xl font-bold bg-rose-50 text-rose-800 border border-rose-200 block";
+                    statusMsg.innerHTML = `❌ تعذر الحفظ في Supabase: ${userFriendlyError}`;
+                }
+                alert(`❌ تعذر إتمام التسجيل في Supabase:\n${userFriendlyError}`);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                    submitBtn.innerHTML = originalBtnHtml;
+                    if (window.lucide) window.lucide.createIcons();
+                }
+            }
+        }
+
+        window.submitRegistration = submitRegistration;
+    </script>
 </body>
 </html>
